@@ -3,8 +3,10 @@ module.exports = (sequelize, Sequelize) => {
         BookID: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
-            references: 'book',
-            referencesKey: 'BookID',
+            references: {
+                model: "book",
+                key: "BookID",
+            },
         },
         BookItemID: {
             type: Sequelize.UUID,

@@ -8,8 +8,10 @@ module.exports = (sequelize, Sequelize) => {
         AccountID: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
-            references: 'account',
-            referencesKey: 'AccountID',
+            references: {
+                model: "account",
+                key: "AccountID",
+            },
         },
         CreateDate: {
             type: Sequelize.DATE,

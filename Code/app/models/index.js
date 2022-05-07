@@ -6,9 +6,9 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     host: dbConfig.HOST,
     dialect: dbConfig.dialect,
     port: dbConfig.port,
-    operatorsAliases: false,
+    operatorsAliases: 0,
     define: {
-        timestamps: false,
+        // timestamps: false,
         freezeTableName: true,
     },
     pool: {
@@ -29,15 +29,15 @@ db.bookItem = require("./book-item.model.js")(sequelize, Sequelize);
 db.category = require("./category.model.js")(sequelize, Sequelize);
 db.account = require("./account.model.js")(sequelize, Sequelize);
 db.lendingList = require("./lending-list.model.js")(sequelize, Sequelize);
-db.lendingBookList = require("./lending-book-list.model.js")(sequelize, Sequelize);
-
+db.lendingBookList = require("./lending-book-list.model.js")(
+    sequelize,
+    Sequelize
+);
 
 db.book.hasMany(db.bookItem);
 db.category.hasMany(db.book);
 db.account.hasMany(db.lendingList);
 db.lendingList.hasMany(db.lendingBookList);
 db.bookItem.hasMany(db.lendingBookList);
-
-
 
 module.exports = db;

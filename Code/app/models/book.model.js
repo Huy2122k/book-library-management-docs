@@ -16,8 +16,10 @@ module.exports = (sequelize, Sequelize) => {
         },
         CategoryID: {
             type: Sequelize.INTEGER,
-            references: 'category',
-            referencesKey: 'CategoryID'
+            references: {
+                model: 'category',
+                key: 'CategoryID'
+            }
         },
         ImageURL: {
             type: Sequelize.STRING,

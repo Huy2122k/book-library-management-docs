@@ -3,14 +3,18 @@ module.exports = (sequelize, Sequelize) => {
         LendingID: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
-            references: 'lendinglist',
-            referencesKey: 'LendingID',
+            references: {
+                model: "lendinglist",
+                key: "LendingID",
+            },
         },
         BookItemID: {
             type: Sequelize.UUID,
             defaultValue: Sequelize.UUIDV4,
-            references: 'bookitem',
-            referencesKey: 'BookItemID',
+            references: {
+                model: "bookitem",
+                key: "BookItemID",
+            },
         },
     });
 
