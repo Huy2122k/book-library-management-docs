@@ -1,7 +1,6 @@
 const db = require("../models");
 const Book = db.book;
 const Op = db.Sequelize.Op;
-
 // Create and Save a new Tutorial
 exports.create = (req, res) => {
     // Validate request
@@ -35,8 +34,7 @@ exports.create = (req, res) => {
 exports.findAll = (req, res) => {
     const title = req.query.title;
 
-    var condition = title ?
-        {
+    var condition = title ? {
             BookName: {
                 [Op.like]: `%${title}%`,
             },

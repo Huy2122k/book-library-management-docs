@@ -8,7 +8,7 @@ const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
     port: dbConfig.port,
     operatorsAliases: 0,
     define: {
-        // timestamps: false,
+        timestamps: false,
         freezeTableName: true,
     },
     pool: {
