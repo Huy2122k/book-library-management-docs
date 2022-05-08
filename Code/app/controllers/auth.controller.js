@@ -6,6 +6,7 @@ const Op = db.Sequelize.Op;
 var sendToEmail = require("../ultis/mail");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const roles = require("../config/roles.config");
 
 exports.signup = (req, res) => {
     // Save User to Database
@@ -14,6 +15,7 @@ exports.signup = (req, res) => {
             Password: bcrypt.hashSync(req.body.Password, 8),
             AccountID: uuidv4(),
             Status: "unconfirmed_email",
+            Role: req.body.Role ? req.body.Role : roles.USER,
         })
         .then(() => {
             res.send({ message: "User registered successfully!" });
