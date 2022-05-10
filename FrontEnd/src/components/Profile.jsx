@@ -1,30 +1,28 @@
-import AuthService from '../services/auth.service';
+import { useAuth } from '../auth/use-auth';
 
 const Profile = () => {
-    const currentUser = AuthService.getCurrentUser();
-
+    const auth = useAuth();
+    const user = auth.user;
+    console.log(user);
     return (
         <div className="container">
             <header className="jumbotron">
                 <h3>
-                    <strong>{currentUser.username}</strong> Profile
+                    <strong>{user.info.UserName}</strong> Profile
                 </h3>
             </header>
             <p>
-                <strong>Token:</strong> {currentUser.accessToken.substring(0, 20)} ...{' '}
-                {currentUser.accessToken.substr(currentUser.accessToken.length - 20)}
+                <strong>Token:</strong> {user.accessToken.substring(0, 20)} ...{' '}
+                {user.accessToken.substr(user.accessToken.length - 20)}
             </p>
             <p>
-                <strong>Id:</strong> {currentUser.id}
+                <strong>Id:</strong> {user.info.AccountID}
             </p>
             <p>
-                <strong>Email:</strong> {currentUser.email}
+                <strong>Email:</strong> {user.info.Email}
             </p>
-            <strong>Authorities:</strong>
-            <ul>
-                {currentUser.roles &&
-                    currentUser.roles.map((role, index) => <li key={index}>{role}</li>)}
-            </ul>
+            <strong>Role:</strong>
+            <ul>{user.info.Role}</ul>
         </div>
     );
 };

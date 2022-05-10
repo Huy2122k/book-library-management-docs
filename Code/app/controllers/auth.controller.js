@@ -17,11 +17,15 @@ exports.signup = (req, res) => {
             Status: "unconfirmed_email",
             Role: req.body.Role ? req.body.Role : roles.USER,
         })
-        .then(() => {
-            res.send({ message: "User registered successfully!" });
+        .then((user) => {
+            const token = jwt.sign({ id: user.AccountID }, config.secret, {
+                expiresIn: 86400, // 24 hours
+            });
+            res.status(200).send({ info: user, accessToken: token });
         })
         .catch((err) => {
-            res.status(500).send({ message: err.message });
+            console.log(err);
+            res.status(500).send({ message: "something went wrong!" });
         });
 };
 
@@ -50,10 +54,10 @@ exports.signin = (req, res) => {
                     message: "Invalid Password!",
                 });
             }
-            var token = jwt.sign({ id: user.AccountID }, config.secret, {
+            const token = jwt.sign({ id: user.AccountID }, config.secret, {
                 expiresIn: 86400, // 24 hours
             });
-            res.status(200).send({ user, token });
+            res.status(200).send({ info: user, accessToken: token });
         })
         .catch((err) => {
             res.status(500).send({ message: err.message });
@@ -73,7 +77,7 @@ exports.changePassword = async(req, res) => {
             },
         });
         if (!user) {
-            return res.status(404).send({ message: "User Not found." });
+            return res.status(200).send({ message: "User Not found." });
         }
         const passwordIsValid = bcrypt.compareSync(
             req.body.Password,
